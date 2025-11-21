@@ -1,13 +1,178 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Radfall Discription</title>
-<link rel="stylesheet" href="file:///C:/Users/jackt/OneDrive%20-%20Lincoln%20High%20School/Documents/JDTY/WebPages/mystyle/style.css"
-</head>
-<body>
-/* Choose Your Path Section */
+<style>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0d0d0d;
+      color: #e6e6e6;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      cursor: auto;
+    }
+    h1, h2, h3 { color: #ff4500; }
+
+    /* Navbar */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(20,10,0,0.85);
+      backdrop-filter: blur(6px);
+      padding: 15px 25px;
+      border-bottom: 2px solid #ff4500;
+      box-shadow: 0 0 6px rgba(255,69,0,0.25);
+    }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; }
+    .logo { color: #ff4500; font-size: 1.6rem; font-weight: bold; text-shadow: 0 0 6px #ff4500; }
+    .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: #ffae72; }
+    nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+
+    nav ul li a {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #ffae72;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.05rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: 0.3s ease, text-shadow 0.3s ease, transform 0.2s ease;
+    }
+
+    nav ul li a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #ff4500;
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    nav ul li a:hover::after { transform: scaleX(1); }
+    nav ul li a:hover {
+      background-color: rgba(255,69,0,0.12);
+      color: #ffffff;
+      text-shadow: 0 0 6px #ff4500;
+      transform: translateY(-2px);
+    }
+
+    /* Steam button in navbar */
+    .steam-btn-navbar {
+      background-color: #ff4500;
+      color: #0d0d0d;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 10px #ff4500;
+    }
+    .steam-btn-navbar:hover {
+      background-color: #ffae72;
+      text-shadow: 0 0 6px #0d0d0d;
+      box-shadow: 0 0 20px #ff4500, 0 0 35px #ff4500;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 800px) {
+      .menu-toggle { display: block; }
+      .nav-links { display: none; flex-direction: column; background: rgba(0,0,0,0.8); padding: 20px; width: 100%; }
+      .nav-links.active { display: flex; }
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #1a1a1a, #333333); /* placeholder gradient */
+      padding: 140px 20px;
+      text-align: center;
+      animation: heroGlow 2s infinite alternate;
+    }
+    @keyframes heroGlow { 0% { filter: brightness(1); } 50% { filter: brightness(1.05); } 100% { filter: brightness(1); } }
+    .hero h1 { font-size: 3rem; }
+    .hero p { font-size: 1.2rem; max-width: 700px; margin: 10px auto; }
+
+    section { padding: 40px 20px; max-width: 1100px; margin: auto; border-radius: 12px; }
+
+    .bestiary-grid, .zones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .card {
+      padding: 25px; border-radius: 12px; border: 1px solid #ff4500;
+      box-shadow: 0 0 15px rgba(255,69,0,0.4); transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-color: rgba(26,26,26,0.9);
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 0 30px rgba(255,69,0,0.7); }
+
+    /* Timeline */
+    .timeline { position: relative; margin: 40px 0; padding-left: 30px; list-style: none; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #ff4500;
+    }
+    .timeline-item { position: relative; margin-bottom: 30px; padding-left: 20px; }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -14px;
+      top: 0;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ff4500;
+    }
+
+    .note-box {
+      background-color: rgba(255,69,0,0.1);
+      border-left: 4px solid #ff4500;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+      font-style: italic;
+    }
+
+    footer { text-align: center; padding: 20px; background-color: #111; border-top: 2px solid #ff4500; }
+    #footer-steam { cursor: pointer; color: #00adef; font-weight: bold; margin-top: 10px; }
+
+    /* Loading screen */
+    #loadingScreen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #0d0d0d; color: #ff4500; display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; z-index: 2000;
+    }
+
+    /* Fade-in sections */
+    .fade-section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .fade-section.visible { opacity: 1; transform: translateY(0); }
+  
+  .follow-btn {
+    margin: 0 10px;
+    background-color: #ff4c00;
+    color: #000;
+    font-weight: bold;
+    padding: 12px 25px;
+    border-radius: 8px;
+    display: inline-block;
+    text-decoration: none;
+    transition: 0.3s, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(255,76,0,0.5);
+  }
+
+  .follow-btn:hover {
+    background-color: #ffa500;
+    box-shadow: 0 0 20px rgba(255,76,0,0.8), 0 0 40px rgba(255,76,0,0.6);
+    transform: translateY(-2px);
+    color: #000;
+  }
+  /* Choose Your Path Section */
 .path-container {
   max-width: 1100px;
   margin: 0 auto;
@@ -172,109 +337,6 @@
   .path-grid { flex-direction:column; align-items:center; }
   .path-card { width:90%; max-width:260px; }
 }
-<!-- Radfall Loading Screen -->
-<div id="loading-screen">
-  <div class="loader-background"></div>
-  <div class="loader-content">
-    <h1 class="loader-logo">RADFALL</h1>
-    <p class="loader-tip" id="loaderTip">Prepare to enter the dead zones...</p>
 
-    <!-- Path selection -->
-    <div class="path-grid">
-      <button class="path-card" data-path="survivor" aria-pressed="false">
-        <div class="icon">🛠️</div>
-        <h3>Survivor</h3>
-        <p class="short">Crafting & endurance-focused.</p>
-        <ul class="perks">
-          <li>Better crafting yields</li>
-          <li>Radiation resistance +5%</li>
-          <li>Find more resources</li>
-        </ul>
-      </button>
-
-      <button class="path-card" data-path="scout" aria-pressed="false">
-        <div class="icon">🧭</div>
-        <h3>Scout</h3>
-        <p class="short">Exploration & stealth.</p>
-        <ul class="perks">
-          <li>Faster movement</li>
-          <li>See hidden POIs</li>
-          <li>Lower detection risk</li>
-        </ul>
-      </button>
-
-      <button class="path-card" data-path="hunter" aria-pressed="false">
-        <div class="icon">⚔️</div>
-        <h3>Hunter</h3>
-        <p class="short">Combat-oriented.</p>
-        <ul class="perks">
-          <li>Higher melee damage</li>
-          <li>Better Echoform drops</li>
-          <li>Combat advantage at close range</li>
-        </ul>
-      </button>
-    </div>
-
-    <div class="chosen-display">
-      <p>Selected path: <strong id="chosenPath">None</strong></p>
-      <button id="startGameBtn" class="btn">Enter the Dead Zones</button>
-    </div>
-  </div>
-</div>
-
-
-
-    
-<script>
-  const cards = document.querySelectorAll('.path-card');
-  const chosen = document.getElementById('chosenPath');
-
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      cards.forEach(c => c.setAttribute('aria-pressed', 'false'));
-      card.setAttribute('aria-pressed', 'true');
-
-      chosen.textContent = card.dataset.path.charAt(0).toUpperCase() + card.dataset.path.slice(1);
-    });
-  });
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.path-card');
-  const chosen = document.getElementById('chosenPath');
-  const startBtn = document.getElementById('startGameBtn');
-  let selectedPath = null;
-
-  // Path selection
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      cards.forEach(c => c.setAttribute('aria-pressed', 'false'));
-      card.setAttribute('aria-pressed', 'true');
-      selectedPath = card.dataset.path.charAt(0).toUpperCase() + card.dataset.path.slice(1);
-      chosen.textContent = selectedPath;
-    });
-  });
-
-  // Enter button redirect
-  startBtn.addEventListener('click', () => {
-    if(!selectedPath){
-      alert("Choose a path before entering the Dead Zones!");
-      return;
-    }
-    // Go to your website
-    window.location.href = "https://jack15234.github.io/RadfallDiscription/"
-  });
-});
-</script>
-
-
-
-
-
-</body>
-
-</html>
-
-
+</style>
 
